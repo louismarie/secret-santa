@@ -59,15 +59,14 @@ class BlackListItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BlackList
-        fields = ['participant', 'cannot_give', 'event']
+        fields = ['participant', 'cannot_give']
 
 class BlackListSerializer(serializers.ModelSerializer):
     list = BlackListItemSerializer(many=True)
-    event = serializers.PrimaryKeyRelatedField(queryset=Event.objects.all())
 
     class Meta:
         model = BlackList
-        fields = ['list', 'event']
+        fields = ['list']
 
 class GiftListSerializer(serializers.ModelSerializer):
     participant = serializers.PrimaryKeyRelatedField(queryset=Participant.objects.all())

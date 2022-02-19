@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
 
-from api.serializers import UserSerializer, EventSerializer, BlackListSerializer, StartDrawSerializer
+from api.serializers import UserSerializer, EventSerializer, BlackListSerializer, StartDrawSerializer, BlackListItemSerializer
 from api.models import Event, BlackList, GiftList
 from api.draw.process import RunDraw
 
@@ -48,9 +48,14 @@ class BlackListViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
     def create(self, validated_data):
-        event = validated_data['event']
-        for block_item in validated_data.list:
-            BlackList.objects.create(event=event, **block_item)
+        serializer = BlackListSerializer(data=validated_data.data)
+        if serializer.is_valid():
+            for block_item in validated_data.data['list']:
+                serializerItem = BlackListItemSerializer(data=block_item)
+                if serializerItem.is_valid():
+                    serializerItem.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def get_permissions(self):
         if self.action == 'list':
