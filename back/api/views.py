@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
 
 from api.serializers import UserSerializer, EventSerializer, BlackListSerializer
-from api.models import Event, BlackList
+from api.models import Event, BlackList, GiftList
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all().order_by('-date_joined')
@@ -44,5 +44,16 @@ class BlackListViewSet(viewsets.ModelViewSet):
         if self.action == 'list':
             return (IsAuthenticated(),)
         elif self.action == 'create':
+            return (IsAuthenticated(),)
+        return (IsAdminUser(),)
+
+class StartDraw(viewsets.ModelViewSet):
+    queryset = GiftList.objects.all().order_by('-created')
+
+    def create(self, request):
+        return Response({"test": "OK"})
+
+    def get_permissions(self):
+        if self.action == 'create':
             return (IsAuthenticated(),)
         return (IsAdminUser(),)

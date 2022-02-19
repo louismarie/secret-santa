@@ -12,6 +12,7 @@ router = routers.DefaultRouter(trailing_slash=False)
 router.register(r'users', views.UserViewSet)
 router.register(r'events', views.EventViewSet)
 router.register(r'blacklist', views.BlackListViewSet)
+router.register(r'startdraw', views.StartDraw)
 
 urlpatterns = [
     path('', include(router.urls)),
