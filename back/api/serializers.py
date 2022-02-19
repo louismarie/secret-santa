@@ -2,7 +2,7 @@ from rest_framework import serializers
 from django.http import JsonResponse
 from django.contrib.auth.models import User
 
-from api.models import Event, Participant
+from api.models import Event, Participant, BlackList
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -44,3 +44,8 @@ class EventSerializer(serializers.ModelSerializer):
         return {
             'title': obj.title,
         }
+
+class BlackListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BlackList
+        fields = ['block', 'blocked_by']

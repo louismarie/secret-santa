@@ -11,6 +11,7 @@ from rest_framework_simplejwt.views import (
 router = routers.DefaultRouter(trailing_slash=False)
 router.register(r'users', views.UserViewSet)
 router.register(r'events', views.EventViewSet)
+router.register(r'blacklist', views.BlackListViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),

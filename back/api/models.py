@@ -14,8 +14,10 @@ class Participant(models.Model):
     token = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='participants')
 
-
-
+class BlackList(models.Model):
+    created = models.DateTimeField(auto_now_add=True)
+    blocked_by = models.ForeignKey(Participant, on_delete=models.CASCADE, related_name='block')
+    block = models.ForeignKey(Participant, on_delete=models.CASCADE, related_name='blocked_by')
 
 
 
