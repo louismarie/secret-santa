@@ -9,7 +9,7 @@ class Event(models.Model):
 class Participant(models.Model):
     name = models.CharField(max_length=100)
     email = models.CharField(max_length=100)
-    token = models.CharField(max_length=100)
+    token = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='participants')
 
 

@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 from api.models import Event, Participant
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['username', 'email', 'password']
@@ -16,22 +16,13 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
             return super().create(validated_data)
         return JsonResponse(status=400)
 
-class ParticipantSerializer(serializers.HyperlinkedModelSerializer):
+class ParticipantSerializer(serializers.ModelSerializer):
     class Meta:
         model = Participant
         fields = ['name', 'email']
 
-    def to_representation(self, obj):
-        return {
-            'name': obj.name,
-            'email': obj.email,
-        }
-
-    def to_internal_value(self, data):
-        return data
-
-class EventSerializer(serializers.HyperlinkedModelSerializer):
-    participants = serializers.RelatedField(many=True, required=True, queryset=Participant.objects.none())
+class EventSerializer(serializers.ModelSerializer):
+    participants = serializers.RelatedField(many=True, queryset=Participant.objects.none())
 
     class Meta:
         model = Event
@@ -39,10 +30,18 @@ class EventSerializer(serializers.HyperlinkedModelSerializer):
 
     def create(self, validated_data):
         print(validated_data)
-
+        participants = validated_data.pop('participants')
         validated_data['owner'] = self.context['request'].user
-        validated_data.pop('participants')
-        return Event.objects.create(**validated_data)
+        event = Event.objects.create(**validated_data)
+        for participant in participants:
+            Participant.objects.create(event=event, **participant)
+        return event
 
     def to_internal_value(self, data):
         return data
+
+    def to_representation(self, obj):
+        print(obj)
+        return {
+            'title': obj.title,
+        }
