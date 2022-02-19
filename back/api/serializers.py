@@ -45,9 +45,9 @@ class EventSerializer(serializers.ModelSerializer):
         }
 
 class BlackListSerializer(serializers.ModelSerializer):
-    block = serializers.PrimaryKeyRelatedField(many=False, read_only=True)
-    blocked_by = serializers.PrimaryKeyRelatedField(many=False, read_only=True)
+    participant = serializers.PrimaryKeyRelatedField(queryset=Participant.objects.all())
+    cannot_give = serializers.PrimaryKeyRelatedField(queryset=Participant.objects.all())
 
     class Meta:
         model = BlackList
-        fields = ['block', 'blocked_by']
+        fields = ['participant', 'cannot_give']
