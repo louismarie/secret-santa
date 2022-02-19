@@ -2,7 +2,7 @@ from rest_framework import serializers
 from django.http import JsonResponse
 from django.contrib.auth.models import User
 
-from api.models import Event, Participant, BlackList
+from api.models import Event, Participant, BlackList, StartDraw
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -59,3 +59,10 @@ class GiftListSerializer(serializers.ModelSerializer):
     class Meta:
         model = BlackList
         fields = ['participant', 'should_give']
+
+class StartDrawSerializer(serializers.ModelSerializer):
+    event = serializers.PrimaryKeyRelatedField(queryset=Event.objects.all())
+
+    class Meta:
+        model = StartDraw
+        fields = ['event']
