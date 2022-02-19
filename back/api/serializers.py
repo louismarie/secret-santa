@@ -22,7 +22,7 @@ class ParticipantSerializer(serializers.ModelSerializer):
         fields = ['name', 'email']
 
 class EventSerializer(serializers.ModelSerializer):
-    participants = serializers.RelatedField(many=True, queryset=Participant.objects.none())
+    participants = serializers.RelatedField(many=True, required=True, queryset=Participant.objects.none())
 
     class Meta:
         model = Event
@@ -41,7 +41,6 @@ class EventSerializer(serializers.ModelSerializer):
         return data
 
     def to_representation(self, obj):
-        print(obj)
         return {
             'title': obj.title,
         }

@@ -1,7 +1,6 @@
-from django.http import HttpResponse
 from rest_framework import viewsets, permissions
 from django.contrib.auth.models import User
-from rest_framework.decorators import action
+from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
 
 from api.serializers import UserSerializer, EventSerializer
@@ -19,4 +18,13 @@ class UserViewSet(viewsets.ModelViewSet):
 class EventViewSet(viewsets.ModelViewSet):
     queryset = Event.objects.all().order_by('-created')
     serializer_class = EventSerializer
-    permission_classes = [IsAuthenticated]
+
+    def list(self, request):
+        queryset = Event.objects.filter(owner=self.request.user)
+        serializer = EventSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def get_permissions(self):
+        if self.action == 'list':
+            return (IsAuthenticated(),)
+        return (IsAdminUser(),)
