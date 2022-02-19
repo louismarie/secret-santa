@@ -2,9 +2,7 @@
 # front
 
 # back
+__pycache__/
 back/venv
-back/back/__pycache__
-back/api/__pycache__
-back/api/migrations/__pycache__
 back/db.sqlite3
 

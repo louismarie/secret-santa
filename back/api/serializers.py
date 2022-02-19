@@ -2,7 +2,7 @@ from rest_framework import serializers
 from django.http import JsonResponse
 from django.contrib.auth.models import User
 
-from api.models import Event, Participant, BlackList, StartDraw
+from api.models import Event, Participant, GiftList, BlackList, StartDraw
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -20,6 +20,13 @@ class ParticipantSerializer(serializers.ModelSerializer):
     class Meta:
         model = Participant
         fields = ['name', 'email']
+
+    def to_representation(self, obj):
+        return {
+            'name': obj.name,
+            'email': obj.email,
+            'id': obj.id,
+        }
 
 class EventSerializer(serializers.ModelSerializer):
     participants = serializers.RelatedField(many=True, required=True, queryset=Participant.objects.none())
@@ -42,22 +49,32 @@ class EventSerializer(serializers.ModelSerializer):
     def to_representation(self, obj):
         return {
             'title': obj.title,
+            'id': obj.id,
+            'participants': ParticipantSerializer(obj.participants, many=True).data
         }
 
-class BlackListSerializer(serializers.ModelSerializer):
+class BlackListItemSerializer(serializers.ModelSerializer):
     participant = serializers.PrimaryKeyRelatedField(queryset=Participant.objects.all())
     cannot_give = serializers.PrimaryKeyRelatedField(queryset=Participant.objects.all())
 
     class Meta:
         model = BlackList
-        fields = ['participant', 'cannot_give']
+        fields = ['participant', 'cannot_give', 'event']
+
+class BlackListSerializer(serializers.ModelSerializer):
+    list = BlackListItemSerializer(many=True)
+    event = serializers.PrimaryKeyRelatedField(queryset=Event.objects.all())
+
+    class Meta:
+        model = BlackList
+        fields = ['list', 'event']
 
 class GiftListSerializer(serializers.ModelSerializer):
     participant = serializers.PrimaryKeyRelatedField(queryset=Participant.objects.all())
     should_give = serializers.PrimaryKeyRelatedField(queryset=Participant.objects.all())
 
     class Meta:
-        model = BlackList
+        model = GiftList
         fields = ['participant', 'should_give']
 
 class StartDrawSerializer(serializers.ModelSerializer):
