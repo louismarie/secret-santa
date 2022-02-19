@@ -22,3 +22,9 @@ class BlackList(models.Model):
     participant = models.ForeignKey(Participant, on_delete=models.CASCADE, related_name='black_list_participant')
     cannot_give = models.ForeignKey(Participant, on_delete=models.CASCADE, related_name='black_list_cannot_give')
 
+class GiftList(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    created = models.DateTimeField(auto_now_add=True)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='gift_list')
+    participant = models.ForeignKey(Participant, on_delete=models.CASCADE, related_name='gift_list_participant')
+    should_give = models.ForeignKey(Participant, on_delete=models.CASCADE, related_name='gift_list_should_give')

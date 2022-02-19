@@ -51,3 +51,11 @@ class BlackListSerializer(serializers.ModelSerializer):
     class Meta:
         model = BlackList
         fields = ['participant', 'cannot_give']
+
+class GiftListSerializer(serializers.ModelSerializer):
+    participant = serializers.PrimaryKeyRelatedField(queryset=Participant.objects.all())
+    should_give = serializers.PrimaryKeyRelatedField(queryset=Participant.objects.all())
+
+    class Meta:
+        model = BlackList
+        fields = ['participant', 'should_give']
