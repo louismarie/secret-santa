@@ -4,5 +4,6 @@
 # back
 back/venv
 back/back/__pycache__
+back/api/__pycache__
 back/db.sqlite3
 
