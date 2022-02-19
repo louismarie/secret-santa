@@ -29,7 +29,6 @@ class EventSerializer(serializers.ModelSerializer):
         fields = ['title', 'participants']
 
     def create(self, validated_data):
-        print(validated_data)
         participants = validated_data.pop('participants')
         validated_data['owner'] = self.context['request'].user
         event = Event.objects.create(**validated_data)
@@ -46,6 +45,9 @@ class EventSerializer(serializers.ModelSerializer):
         }
 
 class BlackListSerializer(serializers.ModelSerializer):
+    block = serializers.PrimaryKeyRelatedField(many=False, read_only=True)
+    blocked_by = serializers.PrimaryKeyRelatedField(many=False, read_only=True)
+
     class Meta:
         model = BlackList
         fields = ['block', 'blocked_by']
