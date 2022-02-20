@@ -5875,6 +5875,11 @@ pify@^2.2.0:
   resolved "https://registry.yarnpkg.com/pify/-/pify-2.3.0.tgz#ed141a6ac043a849ea588498e7dca8b15330e90c"
   integrity sha1-7RQaasBDqEnqWISY59yosVMw6Qw=
 
+pinia-plugin-persistedstate@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/pinia-plugin-persistedstate/-/pinia-plugin-persistedstate-1.2.2.tgz#a9d36e18dcf903b32c013b6a8da865d6f9b00c21"
+  integrity sha512-qm/fYlkA0p7E3spL0bjSxxl2nm3szGNsIGKlWAbHddMvR48prWi7qYmtmVFIERCpbdCYVSmq5AvGIrGbWzkVzw==
+
 pinia@^2.0.11:
   version "2.0.11"
   resolved "https://registry.yarnpkg.com/pinia/-/pinia-2.0.11.tgz#ff03c714f5e5f16207280a4fc2eab01f3701ee2b"

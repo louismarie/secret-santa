@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-form v-model="valid">
+    <v-form>
       <v-row class="text-center">
         <v-col class="mb-4">
           <h1 class="display-2 font-weight-bold mb-3">
@@ -15,14 +15,6 @@
           <h2 class="headline font-weight-bold mb-5">
             Register
           </h2>
-        </v-col>
-      </v-row>
-      <v-row justify="center">
-        <v-col cols="6">
-          <v-text-field
-              v-model="username"
-              label="Username"
-          ></v-text-field>
         </v-col>
       </v-row>
       <v-row justify="center">
@@ -45,8 +37,9 @@
       <v-row justify="center">
         <v-col>
           <v-row class="mb-5" justify="center">
+
             <v-btn
-                @click="register"
+                @click="clickRegister"
                 variant="outlined"
                 color="primary">
               Register now
@@ -62,32 +55,24 @@
 </template>
 
 <script>
-import axios from 'axios'
-import { rootUrl } from '../constants/api';
+import { mapActions } from 'pinia'
+import { useUserStore } from '@/stores/user'
 
 export default {
-  name: 'HelloWorld',
+  name: 'Register',
 
   data: () => ({
-    valid: false,
-    showPass: false,
-    username: '',
     email: '',
     password: '',
   }),
 
   methods: {
-    async register() {
-        const res = await axios.post(rootUrl + 'users', {
-          username: this.username,
-          password: this.password,
-          email: this.email
-        }, {
-          headers: {
-            "Content-Type": "application/json"
-          }
-        });
-        console.log(res);
+    ...mapActions(useUserStore, ['register']),
+    clickRegister() {
+      this.register(
+        this.email,
+        this.password,
+      )
     }
   }
 }
