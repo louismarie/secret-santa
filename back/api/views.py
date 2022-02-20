@@ -66,6 +66,7 @@ class BlackListViewSet(viewsets.ModelViewSet):
 
 class StartDraw(viewsets.ModelViewSet):
     queryset = GiftList.objects.all().order_by('-created')
+    serializer_class = StartDrawSerializer
 
     def create(self, request):
         serializer = StartDrawSerializer(data=request.data)

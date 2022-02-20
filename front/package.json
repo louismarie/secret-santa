@@ -48,5 +48,8 @@
     "vue-cli-plugin-vuetify": "~2.4.5",
     "vue-tsc": "^0.31.1",
     "vuetify-loader": "^2.0.0-alpha.0"
+  },
+  "engines": {
+    "node": "=16.14.0"
   }
 }
