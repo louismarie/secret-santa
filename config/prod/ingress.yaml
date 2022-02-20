@@ -6,7 +6,6 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/use-regex: "true"
-    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
     - host: tiragecadeaux.com
@@ -19,7 +18,7 @@ spec:
                 name: frontend
                 port:
                   number: 80
-          - path: /api/.*
+          - path: /api
             pathType: Prefix
             backend:
               service:

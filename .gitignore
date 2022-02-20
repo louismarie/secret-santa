@@ -5,4 +5,5 @@
 __pycache__/
 back/venv
 back/db.sqlite3
+back/back/api/static
 

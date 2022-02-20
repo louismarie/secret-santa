@@ -2,7 +2,6 @@ from django.urls import include, path
 from rest_framework import serializers, viewsets, routers
 from rest_framework.documentation import include_docs_urls
 
-
 from . import views
 
 from rest_framework_simplejwt.views import (
@@ -15,7 +14,6 @@ router.register(r'users', views.UserViewSet)
 router.register(r'events', views.EventViewSet)
 router.register(r'blacklist', views.BlackListViewSet)
 router.register(r'startdraw', views.StartDraw)
-
 
 urlpatterns = [
     path('', include(router.urls)),
