@@ -1,9 +1,15 @@
-FROM node:16.14.0 as builder
+FROM node:16.14.0-stretch-slim as builder
 
 WORKDIR /usr/src/app
+
+COPY tsconfig* .
+COPY vite.config.ts .
+COPY vue.config.js .
+COPY index.html .
 COPY package.json .
 COPY yarn.lock .
-COPY ./src .
+COPY ./src ./src
+
 
 RUN yarn install --frozen-lockfile && yarn cache clean
 RUN yarn build
