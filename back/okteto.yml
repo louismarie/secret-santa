@@ -1,0 +1,10 @@
+name: backend
+command: bash
+sync:
+- .:/opt/app
+forward:
+- 8000:8000
+reverse:
+- 9000:9000
+volumes:
+- /root/.cache/pip
