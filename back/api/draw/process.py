@@ -43,12 +43,8 @@ class RunDraw():
         if found is False:
             raise Exception('Unable to make draw')
 
-        for (participant,should_give) in draw_gifts.items():
-            uuid_participant = uuid.UUID(participant)
-            uuid_should_give = uuid.UUID(should_give)
-            gift = {}
-            gift['participant'] = participant
-            gift['should_give'] = should_give
+        for (participant, should_give) in draw_gifts.items():
+            gift = {'participant': participant, 'should_give': should_give}
             serializer = GiftListSerializer(data=gift)
             if serializer.is_valid():
                 serializer.save()

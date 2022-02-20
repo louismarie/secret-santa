@@ -26,6 +26,8 @@ class ParticipantSerializer(serializers.ModelSerializer):
             'name': obj.name,
             'email': obj.email,
             'id': obj.id,
+            'blacklist': BlackListItemSerializer(obj.black_list_participant, many=True).data,
+            'gift': GiftListSerializer(obj.gift_list_participant, many=True).data
         }
 
 class EventSerializer(serializers.ModelSerializer):
