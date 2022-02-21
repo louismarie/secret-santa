@@ -1,7 +1,5 @@
 import random
-import uuid
 from api.models import Participant, BlackList, GiftList
-from api.serializers import GiftListSerializer
 
 class RunDraw():
 
@@ -42,11 +40,5 @@ class RunDraw():
         if found is False:
             raise Exception('Unable to make draw')
 
-        for (participant, should_give) in draw_gifts.items():
-            gift = {'participant': participant, 'should_give': should_give}
-            serializer = GiftListSerializer(data=gift)
-            if serializer.is_valid():
-                serializer.save()
-            else:
-                raise Exception('Unable to store result draw')
+        return draw_gifts
 

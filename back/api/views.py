@@ -4,9 +4,10 @@ from django.contrib.auth.models import User
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
 
-from api.serializers import UserSerializer, EventSerializer, BlackListSerializer, StartDrawSerializer, BlackListItemSerializer
+from api.serializers import UserSerializer, EventSerializer, BlackListSerializer, StartDrawSerializer, BlackListItemSerializer, GiftListSerializer
 from api.models import Event, BlackList, GiftList
 from api.draw.process import RunDraw
+
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all().order_by('-date_joined')
@@ -72,7 +73,16 @@ class StartDraw(viewsets.ModelViewSet):
         serializer = StartDrawSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            RunDraw.run(request.data['event'])
+            draw_gifts = RunDraw.run(request.data['event'])
+
+            for (participant, should_give) in draw_gifts.items():
+                gift = {'participant': participant, 'should_give': should_give}
+            serializer = GiftListSerializer(data=gift)
+            if serializer.is_valid():
+                serializer.save()
+            else:
+                raise Exception('Unable to store result draw')
+
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
