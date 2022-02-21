@@ -2,37 +2,37 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: backend
+  name: frontend
   namespace: secret-santa-prod
   labels:
-    app: backend
+    app: frontend
 spec:
   type: NodePort
   ports:
-    - port: 8000
+    - port: 3000
   selector:
-    app: backend
+    app: frontend
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: backend
+  name: frontend
   namespace: secret-santa-prod
 spec:
   selector:
     matchLabels:
-      app: backend
+      app: frontend
   replicas: 1
   template:
     metadata:
       labels:
-        app: backend
+        app: frontend
     spec:
       imagePullSecrets:
         - name: regcred
       containers:
-        - name: backend
-          image: registry.gitlab.com/louismarie/secret-santa/backend:master
+        - name: frontend
+          image: registry.gitlab.com/louismarie/secret-santa/frontend:3d22bc5
           imagePullPolicy: Always
           ports:
-            - containerPort: 8000
+            - containerPort: 3000
