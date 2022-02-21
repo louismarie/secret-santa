@@ -4,6 +4,8 @@ import {useEventStore} from "@/stores/event";
 
 import NewDrawStepAddParticipants from '@/components/NewDrawStepAddParticipants.vue'
 import NewDrawStepAddBlackList from '@/components/NewDrawStepAddBlackList.vue'
+import NewDrawStepRunDraw from '@/components/NewDrawStepRunDraw.vue'
+
 import NewDrawStepper from '@/components/NewDrawStepper.vue'
 
 export default {
@@ -11,6 +13,7 @@ export default {
   components: {
     NewDrawStepAddParticipants,
     NewDrawStepAddBlackList,
+    NewDrawStepRunDraw,
     NewDrawStepper
   },
   computed: {
@@ -24,6 +27,7 @@ export default {
     <NewDrawStepper />
     <NewDrawStepAddParticipants v-if="eventCreationStep === 1"/>
     <NewDrawStepAddBlackList v-if="eventCreationStep === 2" />
+    <NewDrawStepRunDraw v-if="eventCreationStep === 3" />
   </main>
 </template>
 

@@ -38,12 +38,14 @@ export const useEventStore = defineStore({
           [{
             text: 'Add Participants',
             disabled: false,
-            href: 'breadcrumbs_dashboard',
           },
           {
             text: 'Add Black List',
             disabled: true,
-            href: 'breadcrumbs_link_1',
+          },
+          {
+            text: 'Run Draw',
+            disabled: true,
           }],
         eventCreationStep: 1,
       } as TypeEvents),
@@ -80,17 +82,35 @@ export const useEventStore = defineStore({
         if (blackList.length > 0) {
           await apiPost('blacklist', {list: blackList})
         }
-        // rest step black list
+        // go to run draw
         // @ts-ignore
-        this.eventCreationStep = 1
-        // @ts-ignore
-        this.eventCreationSteps[0].disabled = false
+        this.eventCreationStep = 3
         // @ts-ignore
         this.eventCreationSteps[1].disabled = true
+        // @ts-ignore
+        this.eventCreationSteps[2].disabled = false
+      } catch (error) {
+        console.error(error)
+        return error
+      }
+    },
+    async startDraw() {
+      try {
         await apiPost('startdraw', {
           // @ts-ignore
           event: this.creationEvent.id
         })
+        // reset step black list
+        // @ts-ignore
+        this.eventCreationStep = 1
+        // @ts-ignore
+        this.creationEvent = {}
+        // @ts-ignore
+        this.eventCreationSteps[0].disabled = false
+        // @ts-ignore
+        this.eventCreationSteps[1].disabled = true
+        // @ts-ignore
+        this.eventCreationSteps[1].disabled = true
         // @ts-ignore
         this.router.push({name: 'draw'})
       } catch (error) {

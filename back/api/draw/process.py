@@ -18,8 +18,6 @@ class RunDraw():
             for i in black_list:
                 draw_blacklist['e.id'] = str(i.cannot_give.id)
 
-        random.shuffle(draw_participants)
-
         found = False
         max_try = 10000
         nb_try = 1
@@ -28,6 +26,7 @@ class RunDraw():
         draw_gifts = {}
 
         while (found is False) and (nb_try < max_try):
+            random.shuffle(draw_participants)
             for idx, e in enumerate(draw_participants):
                 given_gift = draw_participants[(idx + 1) % len(draw_participants)]
                 draw_gifts[e] = given_gift

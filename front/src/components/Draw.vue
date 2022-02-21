@@ -37,7 +37,7 @@
                     <v-list-item-header>
                       <v-list-item-title>Participants</v-list-item-title>
                       <v-list-item-subtitle v-for="p in event.participants">
-                        <p>{{p.name}} - {{ p.email }}</p>
+                        <p>{{p.name}}</p>
                         <p>Blacklist settings :</p>
                         <p v-if="p.blacklist.length === 0">-</p>
                         <p v-for="b in p.blacklist">
