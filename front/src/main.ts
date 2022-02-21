@@ -7,17 +7,20 @@ import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import { markRaw } from 'vue'
 import router from './router'
+// @ts-ignore
+import vSelect from 'vue-select'
+import 'vue-select/dist/vue-select.css';
 
 loadFonts()
 
 const pinia = createPinia()
 
-createApp(App)
+const app = createApp(App)
   .use(vuetify)
   .use(router)
   .use(pinia)
+  .component('v-select', vSelect)
   .mount('#app')
-
 
 // @ts-ignore
 pinia.use(({ store }) => {

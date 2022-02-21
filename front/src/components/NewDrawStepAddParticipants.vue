@@ -27,11 +27,8 @@
 
                   <v-btn @click="remove(i)" class="error">delete</v-btn>
                 </div>
-
                 <v-btn @click="addParticipant" class="primary">Add Participant</v-btn>
-
                 <br/>
-
                 <v-btn @click="submit" class="primary">Submit</v-btn>
           </h1>
         </v-col>
@@ -46,7 +43,7 @@ import {mapActions} from "pinia";
 import {useEventStore} from "@/stores/event";
 
 export default {
-  name: 'NewDraw',
+  name: 'NewDrawStepAddParticipants',
 
   data: () => ({
     title: '',
@@ -70,6 +67,9 @@ export default {
     },
     submit() {
       this.addEvent(this.title, this.participants)
+    },
+    remove (index) {
+      this.participants.splice(index, 1)
     }
   }
 }

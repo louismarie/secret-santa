@@ -33,27 +33,20 @@
                     </v-list-item-header>
                   </v-list-item>
 
-                  <v-list-item two-line>
+                  <v-list-item>
                     <v-list-item-header>
                       <v-list-item-title>Participants</v-list-item-title>
-                      <v-list-item-subtitle v-for="p in event.participants">{{p.name}} - {{ p.email }}</v-list-item-subtitle>
-                    </v-list-item-header>
-                  </v-list-item>
-
-                  <v-list-item two-line>
-                    <v-list-item-header>
-                      <v-list-item-title>BlackList</v-list-item-title>
                       <v-list-item-subtitle v-for="p in event.participants">
-                        {{p.name}} - {{ p.email }}
-                      </v-list-item-subtitle>
-                    </v-list-item-header>
-                  </v-list-item>
-
-                  <v-list-item two-line>
-                    <v-list-item-header>
-                      <v-list-item-title>Gifts</v-list-item-title>
-                      <v-list-item-subtitle v-for="p in event.participants">
-                        {{p.name}} - {{ p.email }}
+                        <p>{{p.name}} - {{ p.email }}</p>
+                        Blacklist settings :
+                        <p v-for="b in p.blacklist">
+                          {{b.participant}} will not offer a gift to {{ b.cannot_give }}
+                        </p>
+                        Result random draw :
+                        <p v-for="g in p.gift">
+                          {{g.participant}} should offer a gift to {{ g.should_give }}
+                        </p>
+                        <br/>
                       </v-list-item-subtitle>
                     </v-list-item-header>
                   </v-list-item>
@@ -70,7 +63,7 @@
 <script>
 
 import {mapActions, mapState} from "pinia";
-import {useEventStore} from "../stores/event";
+import {useEventStore} from "@/stores/event";
 
 export default {
   name: 'Draw',
