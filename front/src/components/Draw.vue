@@ -18,7 +18,7 @@
           <h1 class="display-2 font-weight-bold mb-3 mt-5">
             <div>Last 5 draws</div>
           </h1>
-          <div v-for="event in events">
+          <div v-for="event, idxEvent in events">
             <v-col >
               <v-row cols="6" justify="center" class="mb-4">
                 <v-card
@@ -38,13 +38,14 @@
                       <v-list-item-title>Participants</v-list-item-title>
                       <v-list-item-subtitle v-for="p in event.participants">
                         <p>{{p.name}} - {{ p.email }}</p>
-                        Blacklist settings :
+                        <p>Blacklist settings :</p>
+                        <p v-if="p.blacklist.length === 0">-</p>
                         <p v-for="b in p.blacklist">
-                          {{b.participant}} will not offer a gift to {{ b.cannot_give }}
+                          {{nameFromUUID(b.participant, idxEvent)}} will not offer a gift to {{ nameFromUUID(b.cannot_give, idxEvent) }}
                         </p>
-                        Result random draw :
+                        <p>Result random draw :</p>
                         <p v-for="g in p.gift">
-                          {{g.participant}} should offer a gift to {{ g.should_give }}
+                          {{nameFromUUID(g.participant, idxEvent)}} should offer a gift to {{ nameFromUUID(g.should_give, idxEvent) }}
                         </p>
                         <br/>
                       </v-list-item-subtitle>
@@ -60,7 +61,7 @@
   </v-container>
 </template>
 
-<script>
+<script lang="ts">
 
 import {mapActions, mapState} from "pinia";
 import {useEventStore} from "@/stores/event";
@@ -77,6 +78,14 @@ export default {
 
   methods: {
     ...mapActions(useEventStore, ['getEvents']),
+    nameFromUUID(uuid:string, idxEvent:number): string {
+      console.log("store : ", this.events)
+      const event = this.events[idxEvent];
+      if (event) {
+        return event.participants.find((p) => p.id === uuid).name
+      }
+      return ''
+    }
   },
 
   computed: {

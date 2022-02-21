@@ -14,7 +14,7 @@
   </v-container>
 </template>
 
-<script>
+<script lang="ts">
 import {mapState} from "pinia";
 import {useEventStore} from "../stores/event";
 

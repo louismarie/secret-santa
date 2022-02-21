@@ -54,7 +54,7 @@
   </v-container>
 </template>
 
-<script>
+<script lang="ts">
 import { mapActions } from 'pinia'
 import { useUserStore } from '@/stores/user'
 import { useEventStore } from '@/stores/event'

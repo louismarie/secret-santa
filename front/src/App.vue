@@ -6,7 +6,7 @@
   </v-app>
 </template>
 
-<script>
+<script lang="ts">
 import Register from './components/Register.vue'
 
 export default {
