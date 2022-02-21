@@ -16,22 +16,46 @@
           </RouterLink>
           <v-divider />
           <h1 class="display-2 font-weight-bold mb-3 mt-5">
-            <div>Last 5 Draws</div>
+            <div>Last 5 draws</div>
           </h1>
           <div v-for="event in events">
             <v-col >
               <v-row cols="6" justify="center" class="mb-4">
-                <v-card>
+                <v-card
+                    min-width="500px"
+                    rounded
+                    elevation="10"
+                    shaped
+                >
                   <v-list-item>
-                    <v-list-item-content>
-                      <v-list-item-title>{{event.title}}</v-list-item-title>
-                      <v-list-item-subtitle>Participants</v-list-item-subtitle>
+                    <v-list-item-header>
+                      <v-list-item-title><strong>{{event.title}}</strong></v-list-item-title>
+                    </v-list-item-header>
+                  </v-list-item>
+
+                  <v-list-item two-line>
+                    <v-list-item-header>
+                      <v-list-item-title>Participants</v-list-item-title>
                       <v-list-item-subtitle v-for="p in event.participants">{{p.name}} - {{ p.email }}</v-list-item-subtitle>
-                      <v-list-item-subtitle>BlackList</v-list-item-subtitle>
-                      <v-list-item-subtitle v-for="p in event.participants">{{p.name}} - {{ p.email }}</v-list-item-subtitle>
-                      <v-list-item-subtitle>Gifts</v-list-item-subtitle>
-                      <v-list-item-subtitle v-for="p in event.participants">{{p.name}} - {{ p.email }}</v-list-item-subtitle>
-                    </v-list-item-content>
+                    </v-list-item-header>
+                  </v-list-item>
+
+                  <v-list-item two-line>
+                    <v-list-item-header>
+                      <v-list-item-title>BlackList</v-list-item-title>
+                      <v-list-item-subtitle v-for="p in event.participants">
+                        {{p.name}} - {{ p.email }}
+                      </v-list-item-subtitle>
+                    </v-list-item-header>
+                  </v-list-item>
+
+                  <v-list-item two-line>
+                    <v-list-item-header>
+                      <v-list-item-title>Gifts</v-list-item-title>
+                      <v-list-item-subtitle v-for="p in event.participants">
+                        {{p.name}} - {{ p.email }}
+                      </v-list-item-subtitle>
+                    </v-list-item-header>
                   </v-list-item>
                 </v-card>
               </v-row>
