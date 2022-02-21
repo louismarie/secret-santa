@@ -17,6 +17,7 @@ RUN pip install -r requirements.txt --cache-dir /opt/app/pip_cache
 
 RUN mkdir -p /opt/app/back/api/static/
 RUN python manage.py collectstatic --noinput
+RUN python manage.py migrate
 
 RUN chown -R www-data:www-data /opt/app
 
