@@ -32,7 +32,7 @@ spec:
         - name: regcred
       containers:
         - name: frontend
-          image: registry.gitlab.com/louismarie/secret-santa/frontend:3d22bc5
+          image: registry.gitlab.com/louismarie/secret-santa/frontend:3f633b3
           imagePullPolicy: Always
           ports:
             - containerPort: 3000
