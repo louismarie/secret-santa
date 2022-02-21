@@ -29,4 +29,6 @@ class SecretSantaTestCase(APITestCase):
                     self.assertNotEqual(should_give, self.participant3.id)
                 elif participant == self.participant3.id:
                     self.assertNotEqual(should_give, self.participant1.id)
+                else:
+                    self.fail()
 

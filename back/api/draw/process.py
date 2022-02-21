@@ -11,10 +11,10 @@ class RunDraw():
 
         participants = Participant.objects.filter(event=event)
         for e in participants:
-            draw_participants.append(str(e.id))
+            draw_participants.append(e.id)
             black_list = e.black_list_participant.all()
             for i in black_list:
-                draw_blacklist['e.id'] = str(i.cannot_give.id)
+                draw_blacklist[e.id] = i.cannot_give.id
 
         found = False
         max_try = 10000
@@ -31,7 +31,7 @@ class RunDraw():
                 if (e in draw_blacklist) and (draw_blacklist[e] == given_gift):
                     # try again
                     nb_try = nb_try + 1
-                    draw_gifts = []
+                    draw_gifts = {}
                     break
 
                 if len(draw_gifts) == len(draw_participants):
