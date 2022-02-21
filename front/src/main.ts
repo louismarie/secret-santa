@@ -3,6 +3,7 @@ import App from './App.vue'
 import vuetify from '@/plugins/vuetify'
 import { loadFonts } from '@/plugins/webfontloader'
 import { createPinia } from 'pinia'
+// @ts-ignore
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import { markRaw } from 'vue'
 import router from './router'

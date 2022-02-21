@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { apiPost } from '@/plugins/api';
+import { apiPost, apiGet } from '@/plugins/api';
 
 type TypeParticipant = {
   email: string,
@@ -21,9 +21,7 @@ export const useEventStore = defineStore({
       ({
         events: [],
       } as TypeEvents),
-  getters: {
-    getEvents: (state) => state.events
-  },
+  // @ts-ignore
   persist: true,
   actions: {
     async addEvent(title:string, participants:TypeParticipant[]) {
@@ -37,9 +35,18 @@ export const useEventStore = defineStore({
             }
           })
         })
-        this.events.push(newEvent)
         // now go to draw page
+        // @ts-ignore
         this.router.push({name: 'draw'})
+      } catch (error) {
+        console.error(error)
+        return error
+      }
+    },
+    async getEvents() {
+      try {
+        // @ts-ignore
+        this.events = await apiGet('events')
       } catch (error) {
         console.error(error)
         return error

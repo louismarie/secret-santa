@@ -57,6 +57,7 @@
 <script>
 import { mapActions } from 'pinia'
 import { useUserStore } from '@/stores/user'
+import { useEventStore } from '@/stores/event'
 
 export default {
   name: 'Register',
@@ -74,6 +75,14 @@ export default {
         this.password,
       )
     }
+  },
+
+  mounted() {
+    //TODO: create function clean all stores
+    const userStore = useUserStore();
+    userStore.$reset()
+    const eventStore = useEventStore();
+    eventStore.$reset()
   }
 }
 </script>

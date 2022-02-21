@@ -14,6 +14,7 @@ export const useUserStore = defineStore({
       refresh: '',
     },
   }),
+  // @ts-ignore
   persist: true,
   getters: {
     loggedIn: (state) => state.userCreds.access !== '',
@@ -22,17 +23,20 @@ export const useUserStore = defineStore({
   actions: {
     async register(email:string, password:string) {
       try {
+        // @ts-ignore
         this.userData = await apiPost('users', {
           username: email,
           password,
           email
         })
         // now login
+        // @ts-ignore
         this.userCreds = await apiPost('auth', {
           username: email,
           password,
         })
         // now go to draw page
+        // @ts-ignore
         this.router.push({name: 'draw'})
         console.log('done')
       } catch (error) {
