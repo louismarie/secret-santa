@@ -77,11 +77,11 @@ class StartDraw(viewsets.ModelViewSet):
 
             for (participant, should_give) in draw_gifts.items():
                 gift = {'participant': participant, 'should_give': should_give}
-            serializer = GiftListSerializer(data=gift)
-            if serializer.is_valid():
-                serializer.save()
-            else:
-                raise Exception('Unable to store result draw')
+                serializerGift = GiftListSerializer(data=gift)
+                if serializerGift.is_valid():
+                    serializerGift.save()
+                else:
+                    raise Exception('Unable to store result draw')
 
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

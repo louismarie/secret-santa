@@ -19,9 +19,10 @@ class SecretSantaTestCase(APITestCase):
         BlackList.objects.create(participant=self.participant2, cannot_give=self.participant3)
         BlackList.objects.create(participant=self.participant3, cannot_give=self.participant1)
 
-    def test_check_draw_handle_blacklist(self):
+    def test_check_draw_respect_blacklist(self):
         for _ in range(100):
             gifts = RunDraw.run(self.event)
+            self.assertEqual(len(gifts), 3)
             for participant, should_give in gifts.items():
                 if participant == self.participant1.id:
                     self.assertNotEqual(should_give, self.participant2.id)
